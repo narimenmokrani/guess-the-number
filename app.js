@@ -3,51 +3,40 @@ const game = {
     biggestNum: 100,
     smallestNum: 1,
     secretNum: null,
-    prevGuess: [],
-    play: function() {
-      this.secretNum = Math.floor(Math.random() * 
-        (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+    prevGuesses: [],
+  
+    getGuess: function () {
+      let guess = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
+      let parsedNumber = parseInt(guess)
+      return parsedNumber
     },
-    getGuess: function() {
-        prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}: `)
-        if (isNaN(guess) || guess < 1 || guess > 100) {
-            renderError('please try again with a number from 1 to 100!')
-            } 
-let playerchoice = this.getGuess()
-while (playerchoice !== this.secretNum) {
-    this.prevGuess.push(playerchoice)
-    this.render(playerchoice)
-    this.getGuess
-}
-            },
-            render: function(playerchoice) {
-    if (this.playerchoice === this.secretNum) {
-    alert(`congrat you guessed the number in ${this.prevGuess.length}!`)
-    return
+    play: function() {
+      this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+      let playerAnswer
+      console.log(this.secretNum)
+      console.log(playerAnswer)
+      while( playerAnswer !== this.secretNum){
+        playerAnswer = this.getGuess()
+        this.prevGuesses.push(playerAnswer)  
+        this.render(playerAnswer)
+      }
+    },
+    render : function (playerAnswer)   { 
+      if(playerAnswer >= 0 && playerAnswer <= 100){
+        if (playerAnswer === this.secretNum) {
+          alert(`Congrats! You guessed the number in ${this.prevGuesses.length} guesses!`)
+        } 
+        else if (playerAnswer > this.secretNum){
+          alert(`Your guess is too high Previous guesses: ${this.prevGuesses.join(`, `)}`)
+        } 
+        else if (playerAnswer < this.secretNum){
+          alert(`Your guess is too low Previous guesses: ${this.prevGuesses.join(`, `)}`)
+        }
+      }
     }
-    else if (this.playerchoice > this.secretNum) {
-        alert(`your guess is to high, previous guesses: ${this.prevGuess.join(', ')}`)
-        game.getGuess()
-    }
-    else if (this.playerchoice < this.secretNum) {
-        alert(`your guess is low, previous guesses: ${this.prevGuess.join(', ')}`)
-        game.getGuess()
-    }
-}
-}
-
-console.log(game.getGuess())
-
-
-
-
-
-
-
-
-
-
-
+  }
+  
+  game.play()
 
 
 
